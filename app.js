@@ -101,8 +101,9 @@ app.use((req,res,next)=>{
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
 app.get("/", (req, res) => {
-    res.render("listings/index");
+    res.send("Welcome to Wanderlust!");
 });
+
 app.use("/", userRouter);
 
 
