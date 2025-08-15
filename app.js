@@ -103,9 +103,13 @@ app.use("/listings/:id/reviews",reviewRouter);
 
 app.use("/", userRouter);
 
+// app.get("/", (req, res) => {
+//     res.render("index", { allListings: [] }); // pass empty or real data
+// });
 app.get("/", (req, res) => {
-    res.send("Hello Wanderlust! Welcome to the API."); // plain text
+    res.redirect("/listings");
 });
+
 
 // app.all("*", (req, res, next) => {
 //     next(new ExpressError(404, "Page Not Found"));
