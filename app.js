@@ -106,8 +106,9 @@ app.use("/", userRouter);
 // app.get("/", (req, res) => {
 //     res.render("index", { allListings: [] }); // pass empty or real data
 // });
-app.get("/", (req, res) => {
-    res.redirect("/listings");
+app.get("/", async (req, res) => {
+    const allListings = await Listing.find({}); // fetch real data
+    res.render("index", { allListings });
 });
 
 
