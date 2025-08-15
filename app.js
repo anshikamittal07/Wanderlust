@@ -100,13 +100,11 @@ app.use((req,res,next)=>{
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
-
 app.get("/", (req, res) => {
-    res.send("Welcome to Wanderlust!");
+    res.render("listings/index");
 });
-
-
 app.use("/", userRouter);
+
 
 // app.all("*", (req, res, next) => {
 //     next(new ExpressError(404, "Page Not Found"));
