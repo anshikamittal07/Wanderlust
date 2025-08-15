@@ -69,9 +69,7 @@ const sessionOptions = {
     },
     };
     
-app.get("/",(req,res)=>{
-    res.send("Welcome to Wanderlust!");
-});
+
 
 
 app.use(session(sessionOptions));  
@@ -102,6 +100,12 @@ app.use((req,res,next)=>{
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
+
+app.get("/", (req, res) => {
+    res.send("Welcome to Wanderlust!");
+});
+
+
 app.use("/", userRouter);
 
 // app.all("*", (req, res, next) => {
@@ -113,6 +117,7 @@ app.use((err,req,res,next)=>{
     res.status(statusCode).render("error.ejs",{message});
 });
 
-app.listen(8080,()=>{
-    console.log("server is listening");
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+    console.log(`server is listening on port ${port}`);
 });
