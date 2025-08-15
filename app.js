@@ -25,18 +25,27 @@ const userRouter = require("./routes/user.js");
 
 const dbUrl = process.env.ATLASDB_URL;
 
-main()
-    .then(()=>{
-        console.log("connected to DB");
-    }).
-    catch((err)=>{
-        console.log(err);
-    });
+// main()
+//     .then(()=>{
+//         console.log("connected to DB");
+//     }).
+//     catch((err)=>{
+//         console.log(err);
+//     });
 
-    async function main() {
-    await mongoose.connect(dbUrl);
+//     async function main() {
+//     await mongoose.connect(dbUrl);
     
+// }
+async function main() {
+    try {
+        await mongoose.connect(dbUrl);
+        console.log("MongoDB connected!");
+    } catch (err) {
+        console.error("MongoDB connection error:", err);
+    }
 }
+main();
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
@@ -89,27 +98,18 @@ app.use((req,res,next)=>{
     next();
 });
 
-// app.get("/demouser", async (req,res)=>{
-//     let fakeUser = new User({
-//         email: "student@gmail.com",
-//         username: "delta-student"
-//     });
-//     let registeredUser = await User.register(fakeUser, "helloworld");
-//     res.send(registeredUser);
-// });
-
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
-app.get("/", (req, res) => {
-    res.send("Welcome to Wanderlust!");
-});
 
 app.use("/", userRouter);
 
 
-// app.all("*", (req, res, next) => {
-//     next(new ExpressError(404, "Page Not Found"));
-// });
+app.get("/", (req, res) => {
+    res.render("listings/index"); // Render your index.ejs
+});
+app.all("*", (req, res, next) => {
+    next(new ExpressError(404, "Page Not Found"));
+});
 
 app.use((err,req,res,next)=>{
     let {statusCode = 500, message = "something went wrong"} = err;
